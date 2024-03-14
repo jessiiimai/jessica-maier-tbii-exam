@@ -75,26 +75,26 @@ def show_habittracker(frame):
                                          font='lucinda 11', bg='Pink', fg='Black')
     habittracker_header_part2.place(x=30, y=80)
 
-    w_header = tk.Label(frame, text="Enter Your Habit for the Week!", bg="light blue")
-    w_header.place(x=30, y=160)
+    m_header = tk.Label(frame, text="Enter Your Habit for the Week!", bg="light blue")
+    m_header.place(x=30, y=160)
     # create a text entry box for typing the task
-    w_entry = tk.Entry(frame)
-    w_entry.place(x=30, y=190)
-    w_numbertext= tk.Label(frame, text="Enter the frequency", bg="light blue")
-    w_numbertext.place(x=30, y=220)
-    w_number = tk.Entry(frame, width=2, font="lucida 13")
-    w_number.place(x=30, y=250)
+    m_entry = tk.Entry(frame)
+    m_entry.place(x=30, y=190)
+    m_numbertext = tk.Label(frame, text="Enter the frequency", bg="light blue")
+    m_numbertext.place(x=30, y=220)
+    m_number = tk.Entry(frame, width=2, font="lucida 13")
+    m_number.place(x=30, y=250)
 
     month_label = tk.Label(frame, text=current_month, bg="light blue")
     month_label.place(x=58, y=122)
 
     # create buttons
-    submit_weekly = tk.Button(frame, text="Submit", fg="Black", bg="Red", command=lambda: generate_new_habit(frame, int(w_number.get()), w_entry.get()))
-    submit_weekly.place(x=30, y=290)
-    decrement_week = tk.Button(frame, text="⬅", command=lambda: decrement_month(frame, month_label))
-    decrement_week.place(x=30, y=120)
-    increment_weeks = tk.Button(frame, text="➡", command=lambda: increment_month(frame, month_label))
-    increment_weeks.place(x=100, y=120)
+    submit = tk.Button(frame, text="Submit", fg="Black", bg="Red", command=lambda: generate_new_habit(frame, int(m_number.get()), m_entry.get()))
+    submit.place(x=30, y=290)
+    decrement_m = tk.Button(frame, text="⬅", command=lambda: decrement_month(frame, month_label))
+    decrement_m.place(x=30, y=120)
+    increment_m = tk.Button(frame, text="➡", command=lambda: increment_month(frame, month_label))
+    increment_m.place(x=100, y=120)
 
     # a for loop to create the habit labels and checkboxes according to the data stored in the dictionary habit_data
     row = 330
