@@ -1,11 +1,13 @@
 import tkinter as tk
+
+
 def show_calculator(frame, calculator):
     calculation_header = tk.Label(frame, text="Welcome to the Work-Life-Balance Calculator!",
                                   font='lucinda 11 bold', bg='Pink', fg='Black')
     calculation_header.place(x=30, y=50)
 
     # Then there is a small explanatory text.
-    explanation_part1 = tk.Label(frame, text="Type in how much time you spend on", font='lucinda 11 bold',
+    explanation_part1 = tk.Label(frame, text="Edit how much time you spend on", font='lucinda 11 bold',
                                  bg='Pink', fg='Black')
     explanation_part1.place(x=30, y=80)
 
@@ -75,7 +77,7 @@ def calculate_worklifebalance(frame_calculator, input_worktime, input_sleeptime,
 
 
 def show_piechart(frame, worktime_perc, sleeptime_perc, careworktime_perc, freetime_perc):
-    canvas = tk.Canvas(frame, bg="pink", highlightthickness=0, relief='ridge')
+    canvas = tk.Canvas(frame, bg="light blue", highlightthickness=0, relief='ridge')
     canvas.place(x=180, y=400)
     # position, size, start, degree, color
     work_deg = worktime_perc * 360

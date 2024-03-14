@@ -1,33 +1,38 @@
-# https://pythonbasics.org/tkinter-checkbox/
 import tkinter as tk
 
-habit_data = {
-    "3/2024": [("joggen", [True, False]), ("reading", [False, False, False, False])],
-    "4/2024": [("weighlift", [False])]
-}
-
+# a dictionary to save the data of the submitted habits and the frequency for the checkboxes
+habit_data = {"3/2024": [("example", [True, False])]}
+# saving the current month as default
 current_month = "3/2024"
 
-def delete_habit(frame, habit_index):
-    del habit_data[current_month][habit_index]
+
+# definition to reload the page
+# https://stackoverflow.com/questions/15781802/python-tkinter-clearing-a-frame
+def reload_page(frame):
     for widget in frame.winfo_children():
         widget.destroy()
     frame.pack(fill='both', expand=1)
     show_habittracker(frame)
 
 
+# definition to delete a submitted habit from the dictionary
+def delete_habit(frame, habit_index):
+    del habit_data[current_month][habit_index]
+    reload_page(frame)
+
+
+# definition for the clicked checkboxes
 def is_clicked(i, j):
     habit_data[current_month][j][1][i] = not habit_data[current_month][j][1][i]
 
 
+# definition to submit a new habit to the dictionary
 def generate_new_habit(frame, frequency, name):
     habit_data[current_month].append((name, frequency * [False]))
-    for widget in frame.winfo_children():
-        widget.destroy()
-    frame.pack(fill='both', expand=1)
-    show_habittracker(frame)
+    reload_page(frame)
 
 
+# definition to reload the page and open a new list for the next month
 def increment_month(frame, month_label):
     global current_month
     m, y = current_month.split("/")
@@ -41,13 +46,10 @@ def increment_month(frame, month_label):
     if current_month not in habit_data:
         habit_data[current_month] = []
 
-    # https://stackoverflow.com/questions/15781802/python-tkinter-clearing-a-frame
-    for widget in frame.winfo_children():
-        widget.destroy()
-    frame.pack(fill='both', expand=1)
-    show_habittracker(frame)
+    reload_page(frame)
 
 
+# definition for changing to the prior month and if not done yet adding another list for that month
 def decrement_month(frame, month_label):
     global current_month
     m, y = current_month.split("/")
@@ -61,46 +63,40 @@ def decrement_month(frame, month_label):
     if current_month not in habit_data:
         habit_data[current_month] = []
 
-    # https://stackoverflow.com/questions/15781802/python-tkinter-clearing-a-frame
-    for widget in frame.winfo_children():
-        widget.destroy()
-    frame.pack(fill='both', expand=1)
-    show_habittracker(frame)
+    reload_page(frame)
 
 
+# a definition for all our widgets in the frame
 def show_habittracker(frame):
-    habittracker_header_part1 = tk.Label(frame, text='Here you can later track your amount of workhours ',
+    habittracker_header_part1 = tk.Label(frame, text='Here you can track your habits by submitting a ',
                                          font='lucinda 11', bg='Pink', fg='Black')
     habittracker_header_part1.place(x=30, y=50)
-    habittracker_header_part2 = tk.Label(frame, text='per week to check for possible overtime.',
+    habittracker_header_part2 = tk.Label(frame, text='new habit and ticking the ones you did.',
                                          font='lucinda 11', bg='Pink', fg='Black')
     habittracker_header_part2.place(x=30, y=80)
 
-    frame.configure(background="red")
-
-    w_header = tk.Label(frame, text="Enter Your Habit for the Week!", bg="light green")
+    w_header = tk.Label(frame, text="Enter Your Habit for the Week!", bg="light blue")
     w_header.place(x=30, y=160)
     # create a text entry box for typing the task
     w_entry = tk.Entry(frame)
     w_entry.place(x=30, y=190)
-    w_numbertext= tk.Label(frame, text="Enter the frequency", bg="light green")
+    w_numbertext= tk.Label(frame, text="Enter the frequency", bg="light blue")
     w_numbertext.place(x=30, y=220)
     w_number = tk.Entry(frame, width=2, font="lucida 13")
     w_number.place(x=30, y=250)
 
-    # create a Submit Button
+    month_label = tk.Label(frame, text=current_month, bg="light blue")
+    month_label.place(x=58, y=122)
+
+    # create buttons
     submit_weekly = tk.Button(frame, text="Submit", fg="Black", bg="Red", command=lambda: generate_new_habit(frame, int(w_number.get()), w_entry.get()))
-    submit_weekly.place(x=30, y=280)
+    submit_weekly.place(x=30, y=290)
+    decrement_week = tk.Button(frame, text="⬅", command=lambda: decrement_month(frame, month_label))
+    decrement_week.place(x=30, y=120)
+    increment_weeks = tk.Button(frame, text="➡", command=lambda: increment_month(frame, month_label))
+    increment_weeks.place(x=100, y=120)
 
-    month_label = tk.Label(frame, text=current_month)
-    month_label.place(x=40, y=110)
-
-    decrement_week = tk.Button(frame, command=lambda: decrement_month(frame, month_label))
-    decrement_week.place(x=30, y=110)
-
-    increment_weeks = tk.Button(frame, command=lambda: increment_month(frame, month_label))
-    increment_weeks.place(x=90, y=110)
-
+    # a for loop to create the habit labels and checkboxes according to the data stored in the dictionary habit_data
     row = 330
     column = 30
     j = 0
@@ -112,7 +108,7 @@ def show_habittracker(frame):
         row += 60
         i = 0
         for chkbxs in habit[1]:
-            # fixed variable source
+            # code to make checkboxes: https://pythonbasics.org/tkinter-checkbox/
             checkbox = tk.Checkbutton(frame, onvalue=1, offvalue=0, command=lambda a=i, b=j: is_clicked(a, b))
             checkbox.place(x=column+100, y=row - 60)
             column += 20
