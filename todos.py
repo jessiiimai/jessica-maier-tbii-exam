@@ -50,7 +50,14 @@ def delete_task(taskNumberField, textArea):
         textArea.insert('end -1 chars', "[ " + str(i + 1) + " ] " + tasks_list[i])
 
 
-def show_todolist_widgets(tk, frame):
+def show_todolist(tk, frame):
+    todolist_header_part1 = tk.Label(frame, text='Here you can later note down and check through ',
+                                     font='lucinda 11', bg='Pink', fg='Black')
+    todolist_header_part1.place(x=30, y=50)
+    todolist_header_part2 = tk.Label(frame, text='your To Dos.',
+                                     font='lucinda 11', bg='Pink', fg='Black')
+    todolist_header_part2.place(x=30, y=80)
+
     # create a label : Enter Your Task
     enterTask = tk.Label(frame, text="Enter Your Task", bg="light green")
     enterTask.place(x=30, y=110)

@@ -69,6 +69,13 @@ def decrement_month(frame, month_label):
 
 
 def show_habittracker(frame):
+    habittracker_header_part1 = tk.Label(frame, text='Here you can later track your amount of workhours ',
+                                         font='lucinda 11', bg='Pink', fg='Black')
+    habittracker_header_part1.place(x=30, y=50)
+    habittracker_header_part2 = tk.Label(frame, text='per week to check for possible overtime.',
+                                         font='lucinda 11', bg='Pink', fg='Black')
+    habittracker_header_part2.place(x=30, y=80)
+
     frame.configure(background="red")
 
     w_header = tk.Label(frame, text="Enter Your Habit for the Week!", bg="light green")

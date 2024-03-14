@@ -39,6 +39,13 @@ def submit_entry(frame, dateentry, workinghourscale, workinghoursdonescale):
 
 
 def show_workinghours(frame):
+    workinghours_header_part1 = tk.Label(frame, text='Here you can later track your amount of workhours ',
+                                         font='lucinda 11', bg='Pink', fg='Black')
+    workinghours_header_part1.place(x=30, y=50)
+    workinghours_header_part2 = tk.Label(frame, text='per week to check for possible overtime.',
+                                         font='lucinda 11', bg='Pink', fg='Black')
+    workinghours_header_part2.place(x=30, y=80)
+
     dateentry = tk.Entry(frame, width=20, font="lucida 13")
     dateentry.place(x=170, y=250)
     dateentry_label = tk.Label(frame, text="DATE", font='lucinda 11 bold', fg='Black')

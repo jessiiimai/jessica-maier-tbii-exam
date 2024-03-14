@@ -1,7 +1,6 @@
 import tkinter as tk
 from calculator import *
 from todos import *
-from chatbot import *
 from habittracker import *
 from workinghours import *
 
@@ -10,84 +9,40 @@ root = tk.Tk()
 root.title('My Friendly Coworker')
 root.geometry("405x720")
 
-# variables
-# These variables save the input from the CALCULATOR
-input_worktime = tk.IntVar()
-input_sleeptime = tk.IntVar()
-input_careworktime = tk.IntVar()
-input_freetime = tk.IntVar()
+# variable for background color
+bg_colour = "light blue"
 
-# This code creates a window frame for every page of a function for the app
-# with a corresponding background color
-# and a Title headline.
-
-# homescreen
+# create a frame for every page of the app
 frame_homescreen = tk.Frame(root)
-frame_homescreen.configure(background="light blue")
+frame_homescreen.configure(background=bg_colour)
 
+frame_habittracker = tk.Frame(root)
+frame_habittracker.configure(background=bg_colour)
+
+frame_workinghours = tk.Frame(root)
+frame_workinghours.configure(background=bg_colour)
+
+frame_todolist = tk.Frame(root)
+frame_todolist.configure(background=bg_colour)
+
+frame_calculator = tk.Frame(root)
+frame_calculator.configure(background=bg_colour)
+
+# create a header title for the homescreen
 homescreen_header_part1 = tk.Label(frame_homescreen, text='Welcome to Your Friendly Coworker,', font='lucinda 15 bold',
                                    bg='Pink', fg='Black')
 homescreen_header_part1.place(x=30, y=50)
 homescreen_header_part2 = tk.Label(frame_homescreen, text='who can...', font='lucinda 16', bg='Pink', fg='Black')
 homescreen_header_part2.place(x=30, y=80)
 
-# habittracker
-frame_habittracker = tk.Frame(root)
-frame_habittracker.configure(background="light green")
-habittracker_header_part1 = tk.Label(frame_habittracker, text='Here you can later track habits to maintain a ',
-                                     font='lucinda 11', bg='Pink', fg='Black')
-habittracker_header_part1.place(x=30, y=50)
-habittracker_header_part2 = tk.Label(frame_habittracker, text='healthy work lifestyle, by p.e. making enough pauses.',
-                                     font='lucinda 11', bg='Pink', fg='Black')
-habittracker_header_part2.place(x=30, y=80)
-
-# workinghours
-frame_workinghours = tk.Frame(root)
-frame_workinghours.configure(background="yellow")
-workinghours_header_part1 = tk.Label(frame_workinghours, text='Here you can later track your amount of workhours ',
-                                     font='lucinda 11', bg='Pink', fg='Black')
-workinghours_header_part1.place(x=30, y=50)
-workinghours_header_part2 = tk.Label(frame_workinghours, text='per week to check for possible overtime.',
-                                     font='lucinda 11', bg='Pink', fg='Black')
-workinghours_header_part2.place(x=30, y=80)
-
-# todolist
-frame_todolist = tk.Frame(root)
-frame_todolist.configure(background="orange")
-todolist_header_part1 = tk.Label(frame_todolist, text='Here you can later note down and check through ',
-                                 font='lucinda 11', bg='Pink', fg='Black')
-todolist_header_part1.place(x=30, y=50)
-todolist_header_part2 = tk.Label(frame_todolist, text='your To Dos.',
-                                 font='lucinda 11', bg='Pink', fg='Black')
-todolist_header_part2.place(x=30, y=80)
-
-# chatbot
-frame_chatbot = tk.Frame(root)
-frame_chatbot.configure(background="violet")
-chatbot_header_part1 = tk.Label(frame_chatbot, text='Here you can later ask a chatbot questions about',
-                                font='lucinda 11', bg='Pink', fg='Black')
-chatbot_header_part1.place(x=30, y=50)
-chatbot_header_part2 = tk.Label(frame_chatbot, text='work rights and work safety in Germany.',
-                                font='lucinda 11', bg='Pink', fg='Black')
-chatbot_header_part2.place(x=30, y=80)
-
-# calculator
-frame_calculator = tk.Frame(root)
-frame_calculator.configure(background="pink")
-calculation_header = tk.Label(frame_calculator, text="Welcome to the Work-Life-Balance Calculator!",
-                               font='lucinda 11 bold', bg='Pink', fg='Black')
-calculation_header.place(x=30, y=50)
-
 
 # code for switching between frames from:
 # https://www.tutorialspoint.com/how-to-switch-between-two-frames-in-tkinter#:~:text=In%20most%20cases%2C%20you%20need,many%20widgets%20in%20the%20application.
-
 def forget_all():
     frame_homescreen.pack_forget()
     frame_habittracker.pack_forget()
     frame_workinghours.pack_forget()
     frame_todolist.pack_forget()
-    frame_chatbot.pack_forget()
     frame_calculator.pack_forget()
 
 # when you push the button to get to a page all the frames get forgotten
@@ -118,32 +73,18 @@ def todolist():
     root.title("To Do List")
 
 
-def chatbot():
-    forget_all()
-    frame_chatbot.pack(fill='both', expand=1)
-    root.title("Chatbot")
-
 def calculator():
     forget_all()
     frame_calculator.pack(fill='both', expand=1)
     root.title("Work-Life-Balance Calculator")
     root.update()
 
-# call definition from file "calculator"
-show_calculator_widgets(tk, frame_calculator, input_worktime, input_sleeptime, input_careworktime, input_freetime, calculator)
 
-# call definition from file "todos"
-show_todolist_widgets(tk, frame_todolist)
-
-# call definition from file chatbot
-create_chatbot(frame_chatbot)
-
-# call definition from file habittracker
+# call definitions from the other python files that contain the widgets of the individual pages
+show_calculator(frame_calculator, calculator)
+show_todolist(tk, frame_todolist)
 show_habittracker(frame_habittracker)
-
-# call definition from file workinhours
 show_workinghours(frame_workinghours)
-
 
 # The following code creates the buttons on the homescreen for every function of the app
 # with a little explanatory text directly underneath.
@@ -171,17 +112,6 @@ todolist_button.place(x=10, y=250)
 todolist_explained = tk.Label(frame_homescreen, text='...remind you of your To Dos.', font='lucinda 8',
                               bg='Pink', fg='Black')
 todolist_explained.place(x=10, y=300)
-
-# ChatBot
-chatbot_button = tk.Button(frame_homescreen, text="Chatbot", font='lucinda 15 bold', height=1, width=15,
-                           command=lambda: chatbot())
-chatbot_button.place(x=210, y=250)
-chatbot_explained_part1 = tk.Label(frame_homescreen, text='...provide you with information about', font='lucinda 8',
-                                   bg='Pink', fg='Black')
-chatbot_explained_part1.place(x=210, y=300)
-chatbot_explained_part2 = tk.Label(frame_homescreen, text='work safety, stress relief and more.', font='lucinda 8',
-                                   bg='Pink', fg='Black')
-chatbot_explained_part2.place(x=210, y=320)
 
 # Calculator
 calculator_button = tk.Button(frame_homescreen, text="Calculator", font='lucinda 30 bold',
